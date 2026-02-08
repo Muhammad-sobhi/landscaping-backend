@@ -1,0 +1,39 @@
+<?php
+
+use Illuminate\Database\Migrations\Migration;
+use Illuminate\Database\Schema\Blueprint;
+use Illuminate\Support\Facades\Schema;
+
+return new class extends Migration
+{
+    /**
+     * Run the migrations.
+     */
+    public function up(): void
+    {
+      Schema::create('leads', function (Blueprint $table) {
+    $table->id();
+    $table->string('full_name');
+    $table->string('email')->nullable();
+    $table->string('phone');
+    $table->string('city');
+    $table->string('address')->nullable();
+    $table->string('service_type');
+    $table->text('description')->nullable();
+    $table->string('status')->default('new');
+    $table->foreignId('assigned_to')->nullable()->constrained('users')->nullOnDelete();
+    $table->timestamps();
+});
+
+
+
+    }
+
+    /**
+     * Reverse the migrations.
+     */
+    public function down(): void
+    {
+        Schema::dropIfExists('leads');
+    }
+};
