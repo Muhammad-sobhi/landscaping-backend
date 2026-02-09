@@ -19,18 +19,18 @@ return [
 
     'allowed_methods' => ['*'],
 
-    'allowed_origins' => [
-        'http://localhost:3000',
-        'http://localhost:5173'],
+   'allowed_origins' => [
+    'http://localhost:3000',
+    'http://localhost:5173',
+    'https://dashthattrrguy.netlify.app', // Added your Netlify domain
+],
 
-    'allowed_origins_patterns' => [],
+'allowed_headers' => ['*'],
 
-    'allowed_headers' => ['*'],
+'exposed_headers' => [],
 
-    'exposed_headers' => [],
+'max_age' => 0,
 
-    'max_age' => 0,
-
-    'supports_credentials' => false,
+'supports_credentials' => true,
 
 ];
