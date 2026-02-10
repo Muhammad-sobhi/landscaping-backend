@@ -15,15 +15,15 @@ return [
     |
     */
 
-    'paths' => ['api/*', 'sanctum/csrf-cookie'],
+    'paths' => ['api/*', 'sanctum/csrf-cookie',, 'login', 'api/login'],
 
     'allowed_methods' => ['*'],
 
    'allowed_origins' => [
     'http://localhost:3000',
     'http://localhost:5173',
-    'https://additional-georgina-thattreeguy-c7fb11d9.koyeb.app/',
-    'https://decent-leese-thattreeguy-4b352b8b.koyeb.app/', // Added your Netlify domain
+    'https://additional-georgina-thattreeguy-c7fb11d9.koyeb.app',
+    'https://decent-leese-thattreeguy-4b352b8b.koyeb.app', // Added your Netlify domain
 ],
 
 'allowed_headers' => ['*'],
