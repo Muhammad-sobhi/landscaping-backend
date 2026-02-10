@@ -22,8 +22,8 @@ return [
    'allowed_origins' => [
     'http://localhost:3000',
     'http://localhost:5173',
-    'https://dashthattrrguy.netlify.app',
-    'https://thattreeguy.netlify.app/', // Added your Netlify domain
+    'https://additional-georgina-thattreeguy-c7fb11d9.koyeb.app/',
+    'https://decent-leese-thattreeguy-4b352b8b.koyeb.app/', // Added your Netlify domain
 ],
 
 'allowed_headers' => ['*'],
