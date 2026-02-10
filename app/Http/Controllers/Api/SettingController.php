@@ -39,11 +39,14 @@ class SettingController extends Controller
             }
     
             foreach ($settingsData as $key => $value) {
+                if ($key === 'about_image_preview' || $key === 'about_image_file' || $key === 'about_image_path') {
+                    continue;
+                }
                 $finalValue = is_array($value) ? json_encode($value) : $value;
-                if ($key === 'about_image_preview' || $key === 'about_image_file') continue;
+
                 Setting::updateOrCreate(
                     ['key' => $key], 
-                    ['value' => $value]
+                    ['value' => $finalValue] // Fixed: use $finalValue here too
                 );
             }
         }
