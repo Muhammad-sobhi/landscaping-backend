@@ -27,7 +27,7 @@ class SettingController extends Controller
 
     public function update(Request $request)
     {
-        // 1. Handle File Uploads (Main Logo, About Main, and About Extra)
+        // 1. Handle File Uploads (Main Logo, About Main, About Extra, and NEW: Partners)
         if ($request->hasFile('logo')) {
             $path = $request->file('logo')->store('branding', 'public');
             Setting::updateOrCreate(['key' => 'logo_path'], ['value' => $path]);
@@ -38,10 +38,29 @@ class SettingController extends Controller
             Setting::updateOrCreate(['key' => 'about_image_path'], ['value' => $path]);
         }
 
-        // NEW: Handle the Extra About Image
         if ($request->hasFile('about_extra_image')) {
             $path = $request->file('about_extra_image')->store('branding', 'public');
             Setting::updateOrCreate(['key' => 'about_extra_image_path'], ['value' => $path]);
+        }
+
+        // NEW: Handle Partner Logo Upload (Appends to a JSON array)
+        if ($request->hasFile('partner_logo')) {
+            $path = $request->file('partner_logo')->store('partners', 'public');
+            
+            $existingRecord = Setting::where('key', 'partner_logos')->first();
+            $logos = $existingRecord ? json_decode($existingRecord->value, true) : [];
+            
+            // Add new logo entry
+            $logos[] = [
+                'id' => uniqid(),
+                'path' => $path,
+                'name' => $request->input('name', 'Partner Logo')
+            ];
+
+            Setting::updateOrCreate(
+                ['key' => 'partner_logos'], 
+                ['value' => json_encode($logos)]
+            );
         }
 
         // 2. Handle the nested settings object
@@ -59,9 +78,10 @@ class SettingController extends Controller
                     'about_image_file', 
                     'about_image_path', 
                     'logo_path',
-                    'about_extra_preview', // NEW
-                    'about_extra_file',    // NEW
-                    'about_extra_image_path' // NEW
+                    'about_extra_preview',
+                    'about_extra_file',    
+                    'about_extra_image_path',
+                    'partner_logos' // Added to protected to handle via specialized logic
                 ];
 
                 if (in_array($key, $protectedKeys)) continue;
@@ -76,5 +96,15 @@ class SettingController extends Controller
         }
 
         return response()->json(['message' => 'Settings updated successfully']);
+    }
+
+    // Helper for public site
+    public function getLandingPageData() {
+        return response()->json([
+            'settings' => Setting::pluck('value', 'key'),
+            'services' => \App\Models\Service::all(),
+            'portfolio' => \App\Models\PortfolioItem::all(),
+            'testimonials' => \App\Models\Testimonial::where('status', 'approved')->get(),
+        ]);
     }
 }
