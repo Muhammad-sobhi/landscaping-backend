@@ -94,7 +94,6 @@ Route::get('/expenses', [ExpenseController::class, 'index']);
 Route::get('/jobs/{job}/expenses', [ExpenseController::class, 'getByJob']);
 Route::post('/jobs/{job}/expenses', [ExpenseController::class, 'store']);
 
-Route::get('/settings', [SettingController::class, 'index']);
 Route::post('/settings', [SettingController::class, 'store']);
 Route::post('/settings', [SettingController::class, 'update']);
 
