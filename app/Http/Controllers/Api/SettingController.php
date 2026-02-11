@@ -13,6 +13,18 @@ class SettingController extends Controller
         return response()->json(Setting::pluck('value', 'key'));
     }
 
+    public function store(Request $request) {
+        $key = $request->input('key');
+        $value = $request->input('value');
+
+        $setting = Setting::updateOrCreate(
+            ['key' => $key],
+            ['value' => $value]
+        );
+
+        return response()->json($setting);
+    }
+
     public function update(Request $request)
     {
         // 1. Handle File Uploads (Main Logo, About Main, and About Extra)
