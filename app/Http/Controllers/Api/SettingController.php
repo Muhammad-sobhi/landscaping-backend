@@ -81,7 +81,7 @@ class SettingController extends Controller
                     'about_extra_preview',
                     'about_extra_file',    
                     'about_extra_image_path',
-                    'partner_logos' // Added to protected to handle via specialized logic
+                    // 'partner_logos' // Added to protected to handle via specialized logic
                 ];
 
                 if (in_array($key, $protectedKeys)) continue;
