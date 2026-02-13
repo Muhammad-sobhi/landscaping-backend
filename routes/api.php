@@ -99,7 +99,7 @@ Route::post('/settings', [SettingController::class, 'update']);
 
 // Services Management
 Route::post('services', [ServiceController::class,'store']);
-Route::match(['post','put'],'services/{id}', [ServiceController::class,'update']);
+Route::match(['post','put'],'services/{service}', [ServiceController::class,'update']);
 Route::delete('services/{service}', [ServiceController::class,'destroy']);
 
     
