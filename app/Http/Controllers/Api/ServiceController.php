@@ -25,15 +25,22 @@ class ServiceController extends Controller
     }
 
     public function update(Request $request, Service $service) {
-        $data = $request->all();
+    $data = $request->all();
 
-        if ($request->hasFile('image')) {
-            $data['image_path'] = $request->file('image')->store('services', 'public');
-        }
-
-        $service->update($data);
-        return response()->json($service);
+    // Decode tags because FormData sends them as a JSON string
+    if ($request->has('tags')) {
+        $data['tags'] = json_decode($request->input('tags'), true);
     }
+
+    if ($request->hasFile('image')) {
+        $data['image_path'] = $request->file('image')->store('services', 'public');
+    }
+
+    // Now $data['tags'] is a real array, and the Model's $casts will work
+    $service->update($data);
+    
+    return response()->json($service);
+}
 
     public function destroy(Service $service) {
         $service->delete();
